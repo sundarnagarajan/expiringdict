@@ -53,7 +53,6 @@ class ExpiringDict(OrderedDict):
         OrderedDict.__init__(self, *args, **kwargs)
         self.max_len = max_len
         self.max_age = max_age_seconds
-        self.lock = RLock()
         if self.max_len is not None:
             while len(self) > self.max_len:
                 try:
@@ -64,15 +63,16 @@ class ExpiringDict(OrderedDict):
         '''
         self.max_len = max_len
         self.max_age = max_age_seconds
+        self.lock = RLock()
+        self.use_lock = True
         
         if args:
-            args = list(args)
+            args = list(args[0])
         if kwargs:
             args.append(kwargs.items())
         if self.max_len is not None:
             args = args[-self.max_len:]
-        for (k, v) in args:
-            self[k] = v
+        OrderedDict.__init__(self, args)
         
         if sys.version_info >= (3, 5):
             self._safe_keys = lambda: list(self.keys())
