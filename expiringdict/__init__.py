@@ -48,11 +48,16 @@ class ExpiringDict(OrderedDict):
         # assert max_len >= 1
         self.use_lock = False
         OrderedDict.__init__(self, *args, **kwargs)
-        self.use_lock = True
-
         self.max_len = max_len
         self.max_age = max_age_seconds
         self.lock = RLock()
+        if self.max_len is not None:
+            while len(self) > self.max_len:
+                try:
+                    self.popitem(last=False)
+                except KeyError:
+                    pass
+        self.use_lock = True
 
         if sys.version_info >= (3, 5):
             self._safe_keys = lambda: list(self.keys())
