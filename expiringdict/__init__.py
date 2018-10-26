@@ -55,6 +55,10 @@ class ExpiringDict(OrderedDict):
         else:
             self._safe_keys = self.keys
 
+    def update(self, *args):
+        with self.lock:
+            OrderedDict.update(self, *args)
+
     def __contains__(self, key):
         """ Return True if the dict has a key, else return False. """
         try:
