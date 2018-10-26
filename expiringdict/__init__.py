@@ -193,9 +193,9 @@ class ExpiringDict(OrderedDict):
             yield k
 
     # -----------------------------------------------------------------------
-    # Following methods do not make sense for ExpiringDict since, they make
-    # a COPY of items, keys, values - and therefore:
-    #     - Will end up returning the age part o fthe value tuple - will be
+    # Following methods do not make sense for ExpiringDict since they
+    # create a COPY of items, keys, values - and therefore:
+    #     - Will end up returning the age part of the value tuple - will be
     #       unexpected by user of the class
     #     - Will not allow updating of the age field or expiring items on
     #       access
