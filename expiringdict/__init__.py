@@ -45,7 +45,7 @@ class ExpiringDict(OrderedDict):
         except KeyError:
             max_len = None
         assert (isinstance(max_len, int) or max_len is None)
-        assert isinstance(max_age_Seconds, int)
+        assert isinstance(max_age_seconds, int)
         assert max_age_seconds >= 0
         
         '''
