@@ -51,13 +51,15 @@ class ExpiringDict(OrderedDict):
         self.max_len = max_len
         self.max_age = max_age_seconds
         self.lock = RLock()
-
-        if args:
-            args = list(args[0])
-        if kwargs:
-            args += kwargs.items()
         if self.max_len is not None:
-            args = args[-self.max_len:]
+            if len(kwargs) >= self.max_len:
+                args = kwargs.items()[-self.max_len:]
+            else:
+                args = list(args[0])[
+                    -(self.max_len - len(kwargs)):] + [
+                        x for x in list(kwargs.items())]
+        else:
+            args = list(args[0]) + [x for x in list(kwargs.items())]
         OrderedDict.__init__(self, args)
 
         if sys.version_info >= (3, 5):
