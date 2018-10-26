@@ -67,7 +67,7 @@ class ExpiringDict(OrderedDict):
                         return True
                     else:
                         del self[key]
-             else:
+            else:
                 item = OrderedDict.__getitem__(self, key)
                 if time.time() - item[1] < self.max_age:
                     return True
