@@ -138,22 +138,53 @@ class ExpiringDict(OrderedDict):
                 pass
         return r
 
-    def fromkeys(self):
-        " Create a new dictionary with keys from seq and values set to value. "
-        raise NotImplementedError()
+    @classmethod
+    def fromkeys(cls, iterable, value=None, max_age_seconds=60, max_len=None):
+        ''' 
+        Create a new dictionary with keys from seq and values set to value.
+        Copied from /usr/lib/python2.7/collections.py OrderedDict.fromkeys
+        '''
+        self = cls(max_age_seconds=max_age_seconds, max_len=Max_len)
+        for key in iterable:
+            self[key] = value
+        return self
 
     def iteritems(self):
         """ Return an iterator over the dictionary's (key, value) pairs. """
-        raise NotImplementedError()
+        """ Copied from /usr/lib/python2.7/collections.py OrderedDict.iteritems"""
+        for k in self:
+            yield (k, self[k])
 
     def itervalues(self):
         """ Return an iterator over the dictionary's values. """
-        raise NotImplementedError()
+        """ Copied from /usr/lib/python2.7/collections.py OrderedDict.itervalues"""
+        for k in self:
+            yield self[k]
 
+    def iterkeys(self):
+        '''
+        Return an iterator over the dictionary's keys
+        Copied from /usr/lib/python2.7/collections.py OrderedDict.iterkeys
+        '''
+        for k in self:
+            yield k
+
+    # -----------------------------------------------------------------------
+    # Following methods do not make sense for ExpiringDict since, they make
+    # a COPY of items, keys, values - and therefore:
+    #     - Will end up returning the age part o fthe value tuple - will be
+    #       unexpected by user of the class
+    #     - Will not allow updating of the age field or expiring items on
+    #       access
+    # -----------------------------------------------------------------------
+    
     def viewitems(self):
-        " Return a new view of the dictionary's items ((key, value) pairs). "
+        '''
+        Return a new view of the dictionary's items ((key, value) pairs). 
+        Copied from /usr/lib/python2.7/collections.py OrderedDict.viewitems
+        '''
         raise NotImplementedError()
-
+        
     def viewkeys(self):
         """ Return a new view of the dictionary's keys. """
         raise NotImplementedError()
