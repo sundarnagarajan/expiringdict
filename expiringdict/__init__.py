@@ -27,7 +27,21 @@ except ImportError:
 
 
 class ExpiringDict(OrderedDict):
-    def __init__(self, *args, max_age_seconds=60, max_len=None):
+    def __init__(self, *args, **kwargs):
+        '''
+        ExpiringDict-specific kwargs:
+        max_age_seconds-->int: Expiration time in seconds
+        max_age_len-->int or None:
+            If None, number of dict items is unlimited
+        '''
+        try:
+            max_age_seconds = kwargs.pop('max_age_seconds')
+        except KeyError:
+            max_age_seconds = 60
+        try:
+            max_len = kwargs.pop('max_len')
+        except KeyError:
+            max_len = None
         assert max_age_seconds >= 0
         # assert max_len >= 1
 
