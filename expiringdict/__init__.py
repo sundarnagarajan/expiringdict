@@ -44,6 +44,7 @@ class ExpiringDict(OrderedDict):
             max_len = None
         assert max_age_seconds >= 0
         # assert max_len >= 1
+        self.use_lock = False
         
         # -------------------------------------------------------------
         # copied from python2.7/collections.py OrderedDict.__init__
@@ -57,7 +58,8 @@ class ExpiringDict(OrderedDict):
         self.__update(*args)
         # -------------------------------------------------------------
 
-        OrderedDict.__init__(self, *args)
+        # OrderedDict.__init__(self, *args)
+        self.use_lock = True
         self.max_len = max_len
         self.max_age = max_age_seconds
         self.lock = RLock()
@@ -99,6 +101,9 @@ class ExpiringDict(OrderedDict):
 
     def __setitem__(self, key, value):
         """ Set d[key] to value. """
+            OrderedDict.__setitem__(self, key, (value, time.time()))
+            return
+        if not self.use_lock:
         with self.lock:
             if self.max_len is not None:
                 if len(self) == self.max_len:
