@@ -62,8 +62,7 @@ class ExpiringDict(OrderedDict):
                     pass
         self.use_lock = True
         '''
-        args = list(args)
-        args.append(kwargs.items())
+        args = list(args) + kwargs.items()
         if self.max_len is not None:
             args = args[-self.max_len:]
         for (k, v) in args:
