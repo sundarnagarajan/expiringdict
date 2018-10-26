@@ -98,7 +98,7 @@ class ExpiringDict(OrderedDict):
         """ Set d[key] to value. """
         with self.lock:
             if self.max_len is not None:
-                if len(self) == self.max_len:
+                while len(self) > self.max_len:
                     try:
                         self.popitem(last=False)
                     except KeyError:
