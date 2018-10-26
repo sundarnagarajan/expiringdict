@@ -50,7 +50,7 @@ class ExpiringDict(OrderedDict):
         # -------------------------------------------------------------
         try:
             self.__root
-        except AttrinuteError:
+        except AttributeError:
             self.__root = root = []                     # sentinel node
             root[:] = [root, root, None]
             self.__map = {}
