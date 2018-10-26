@@ -144,7 +144,7 @@ class ExpiringDict(OrderedDict):
         Create a new dictionary with keys from seq and values set to value.
         Copied from /usr/lib/python2.7/collections.py OrderedDict.fromkeys
         '''
-        self = cls(max_age_seconds=max_age_seconds, max_len=Max_len)
+        self = cls(max_age_seconds=max_age_seconds, max_len=max_len)
         for key in iterable:
             self[key] = value
         return self
