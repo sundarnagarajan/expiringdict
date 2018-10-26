@@ -49,7 +49,7 @@ class ExpiringDict(OrderedDict):
         # -------------------------------------------------------------
         # copied from python2.7/collections.py OrderedDict.__init__
         # -------------------------------------------------------------
-        OrderedDict.update(self, *args)
+        OrderedDict.__init__(self, *args)
         # -------------------------------------------------------------
 
         # OrderedDict.__init__(self, *args)
