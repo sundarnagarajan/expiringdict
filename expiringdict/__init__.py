@@ -101,9 +101,9 @@ class ExpiringDict(OrderedDict):
 
     def __setitem__(self, key, value):
         """ Set d[key] to value. """
+        if not self.use_lock:
             OrderedDict.__setitem__(self, key, (value, time.time()))
             return
-        if not self.use_lock:
         with self.lock:
             if self.max_len is not None:
                 if len(self) == self.max_len:
