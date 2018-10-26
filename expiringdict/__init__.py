@@ -47,24 +47,10 @@ class ExpiringDict(OrderedDict):
         assert (isinstance(max_len, int) or max_len is None)
         assert isinstance(max_age_seconds, int)
         assert max_age_seconds >= 0
-        
-        '''
-        self.use_lock = False
-        OrderedDict.__init__(self, *args, **kwargs)
-        self.max_len = max_len
-        self.max_age = max_age_seconds
-        if self.max_len is not None:
-            while len(self) > self.max_len:
-                try:
-                    self.popitem(last=False)
-                except KeyError:
-                    pass
-        self.use_lock = True
-        '''
+
         self.max_len = max_len
         self.max_age = max_age_seconds
         self.lock = RLock()
-        self.use_lock = True
         
         if args:
             args = list(args[0])
@@ -73,7 +59,7 @@ class ExpiringDict(OrderedDict):
         if self.max_len is not None:
             args = args[-self.max_len:]
         OrderedDict.__init__(self, args)
-        
+
         if sys.version_info >= (3, 5):
             self._safe_keys = lambda: list(self.keys())
         else:
@@ -94,7 +80,7 @@ class ExpiringDict(OrderedDict):
                 if time.time() - item[1] < self.max_age:
                     return True
                 else:
-                    del self[key]                
+                    del self[key]
         except KeyError:
             pass
         return False
