@@ -44,6 +44,18 @@ class ExpiringDict(OrderedDict):
             max_len = None
         assert max_age_seconds >= 0
         # assert max_len >= 1
+        
+        # -------------------------------------------------------------
+        # copied from python2.7/collections.py OrderedDict.__init__
+        # -------------------------------------------------------------
+        try:
+            self.__root
+        except AttrinuteError:
+            self.__root = root = []                     # sentinel node
+            root[:] = [root, root, None]
+            self.__map = {}
+        self.__update(*args)
+        # -------------------------------------------------------------
 
         OrderedDict.__init__(self, *args)
         self.max_len = max_len
@@ -54,10 +66,6 @@ class ExpiringDict(OrderedDict):
             self._safe_keys = lambda: list(self.keys())
         else:
             self._safe_keys = self.keys
-
-    def update(self, *args):
-        with self.lock:
-            OrderedDict.update(self, *args)
 
     def __contains__(self, key):
         """ Return True if the dict has a key, else return False. """
