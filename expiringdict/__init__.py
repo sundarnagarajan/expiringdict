@@ -142,7 +142,7 @@ class ExpiringDict(OrderedDict):
     def fromkeys(cls, iterable, value=None, max_age_seconds=60, max_len=None):
         ''' 
         Create a new dictionary with keys from seq and values set to value.
-        Copied from /usr/lib/python2.7/collections.py OrderedDict.fromkeys
+        Copied from collections.py OrderedDict.fromkeys
         '''
         self = cls(max_age_seconds=max_age_seconds, max_len=max_len)
         for key in iterable:
@@ -151,20 +151,20 @@ class ExpiringDict(OrderedDict):
 
     def iteritems(self):
         """ Return an iterator over the dictionary's (key, value) pairs. """
-        """ Copied from /usr/lib/python2.7/collections.py OrderedDict.iteritems"""
+        """ Copied from /collections.py OrderedDict.iteritems"""
         for k in self:
             yield (k, self[k])
 
     def itervalues(self):
         """ Return an iterator over the dictionary's values. """
-        """ Copied from /usr/lib/python2.7/collections.py OrderedDict.itervalues"""
+        """ Copied from /collections.py OrderedDict.itervalues"""
         for k in self:
             yield self[k]
 
     def iterkeys(self):
         '''
         Return an iterator over the dictionary's keys
-        Copied from /usr/lib/python2.7/collections.py OrderedDict.iterkeys
+        Copied from collections.py OrderedDict.iterkeys
         '''
         for k in self:
             yield k
@@ -179,10 +179,7 @@ class ExpiringDict(OrderedDict):
     # -----------------------------------------------------------------------
     
     def viewitems(self):
-        '''
-        Return a new view of the dictionary's items ((key, value) pairs). 
-        Copied from /usr/lib/python2.7/collections.py OrderedDict.viewitems
-        '''
+        ''' Return a new view of the dictionary's items ((key, value) pairs). '''
         raise NotImplementedError()
         
     def viewkeys(self):
