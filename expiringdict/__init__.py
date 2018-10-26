@@ -51,6 +51,7 @@ class ExpiringDict(OrderedDict):
         self.max_len = max_len
         self.max_age = max_age_seconds
         self.lock = RLock()
+        self.use_lock = True
         
         if args:
             args = list(args[0])
