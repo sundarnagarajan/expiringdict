@@ -27,11 +27,11 @@ except ImportError:
 
 
 class ExpiringDict(OrderedDict):
-    def __init__(self, max_age_seconds=60, max_len=None):
+    def __init__(self, *args, max_age_seconds=60, max_len=None):
         assert max_age_seconds >= 0
         # assert max_len >= 1
 
-        OrderedDict.__init__(self)
+        OrderedDict.__init__(self, *args)
         self.max_len = max_len
         self.max_age = max_age_seconds
         self.lock = RLock()
