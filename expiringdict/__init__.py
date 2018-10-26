@@ -49,12 +49,6 @@ class ExpiringDict(OrderedDict):
         # -------------------------------------------------------------
         # copied from python2.7/collections.py OrderedDict.__init__
         # -------------------------------------------------------------
-        try:
-            self.__root
-        except AttributeError:
-            self.__root = root = []                     # sentinel node
-            root[:] = [root, root, None]
-            self.__map = {}
         OrderedDict.update(self, *args)
         # -------------------------------------------------------------
 
