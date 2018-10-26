@@ -140,7 +140,7 @@ class ExpiringDict(OrderedDict):
 
     @classmethod
     def fromkeys(cls, iterable, value=None, max_age_seconds=60, max_len=None):
-        ''' 
+        '''
         Create a new dictionary with keys from seq and values set to value.
         Copied from collections.py OrderedDict.fromkeys
         '''
@@ -177,11 +177,11 @@ class ExpiringDict(OrderedDict):
     #     - Will not allow updating of the age field or expiring items on
     #       access
     # -----------------------------------------------------------------------
-    
+
     def viewitems(self):
-        ''' Return a new view of the dictionary's items ((key, value) pairs). '''
+        '''Return a new view of ((key, value) pairs).'''
         raise NotImplementedError()
-        
+
     def viewkeys(self):
         """ Return a new view of the dictionary's keys. """
         raise NotImplementedError()
