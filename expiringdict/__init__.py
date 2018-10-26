@@ -55,7 +55,7 @@ class ExpiringDict(OrderedDict):
         if args:
             args = list(args[0])
         if kwargs:
-            args.append(kwargs.items())
+            args += kwargs.items()
         if self.max_len is not None:
             args = args[-self.max_len:]
         OrderedDict.__init__(self, args)
