@@ -55,7 +55,7 @@ class ExpiringDict(OrderedDict):
             self.__root = root = []                     # sentinel node
             root[:] = [root, root, None]
             self.__map = {}
-        dict.__update(self, *args)
+        OrderedDict.update(self, *args)
         # -------------------------------------------------------------
 
         # OrderedDict.__init__(self, *args)
