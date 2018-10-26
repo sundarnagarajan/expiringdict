@@ -62,6 +62,8 @@ class ExpiringDict(OrderedDict):
                     pass
         self.use_lock = True
         '''
+        self.max_len = max_len
+        self.max_age = max_age_seconds
         args = list(args) + kwargs.items()
         if self.max_len is not None:
             args = args[-self.max_len:]
