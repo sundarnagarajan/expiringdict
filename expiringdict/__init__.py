@@ -44,8 +44,11 @@ class ExpiringDict(OrderedDict):
             max_len = kwargs.pop('max_len')
         except KeyError:
             max_len = None
+        assert (isinstance(max_len, int) or max_len is None)
+        assert isinstance(max_age_Seconds, int)
         assert max_age_seconds >= 0
-        # assert max_len >= 1
+        
+        '''
         self.use_lock = False
         OrderedDict.__init__(self, *args, **kwargs)
         self.max_len = max_len
@@ -58,7 +61,13 @@ class ExpiringDict(OrderedDict):
                 except KeyError:
                     pass
         self.use_lock = True
-
+        '''
+        args.append(kwargs.items())
+        if self.max_len is not None:
+            args = args[-self.max_len:]
+        for (k, v) in args:
+            self[k] = v
+        
         if sys.version_info >= (3, 5):
             self._safe_keys = lambda: list(self.keys())
         else:
