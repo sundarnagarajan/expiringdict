@@ -55,3 +55,8 @@ put and get a value there:
 
      cache["key"] = "value"
      cache.get("key")
+
+Changes from [mailgun/expiringdict](https://github.com/mailgun/expiringdict):
+
+- max_age_seconds is optional parameter - defaults to 60 (seconds)
+- max_len is optional and defaults to None (no limit to number of elements)
