@@ -64,10 +64,11 @@ class ExpiringDict(OrderedDict):
         '''
         self.max_len = max_len
         self.max_age = max_age_seconds
-        print('kwargs: ', kwargs)
-        print('args: ', args)
         
-        args = list(args) + kwargs.items()
+        if args:
+            args = list(args)
+        if kwargs:
+            args.append(kwargs.items())
         if self.max_len is not None:
             args = args[-self.max_len:]
         for (k, v) in args:
