@@ -45,15 +45,9 @@ class ExpiringDict(OrderedDict):
         assert max_age_seconds >= 0
         # assert max_len >= 1
         self.use_lock = False
-        
-        # -------------------------------------------------------------
-        # copied from python2.7/collections.py OrderedDict.__init__
-        # -------------------------------------------------------------
         OrderedDict.__init__(self, *args)
-        # -------------------------------------------------------------
-
-        # OrderedDict.__init__(self, *args)
         self.use_lock = True
+
         self.max_len = max_len
         self.max_age = max_age_seconds
         self.lock = RLock()
@@ -66,12 +60,19 @@ class ExpiringDict(OrderedDict):
     def __contains__(self, key):
         """ Return True if the dict has a key, else return False. """
         try:
-            with self.lock:
+            if self.use_lock is True:
+                with self.lock:
+                    item = OrderedDict.__getitem__(self, key)
+                    if time.time() - item[1] < self.max_age:
+                        return True
+                    else:
+                        del self[key]
+             else:
                 item = OrderedDict.__getitem__(self, key)
                 if time.time() - item[1] < self.max_age:
                     return True
                 else:
-                    del self[key]
+                    del self[key]                
         except KeyError:
             pass
         return False
