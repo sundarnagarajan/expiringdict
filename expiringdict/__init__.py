@@ -33,6 +33,8 @@ class ExpiringDict(OrderedDict):
         max_age_seconds-->int: Expiration time in seconds
         max_age_len-->int or None:
             If None, number of dict items is unlimited
+        max_age_seconds and max_len cannot be used as keys if
+        constructing ExpiringDict using kwargs
         '''
         try:
             max_age_seconds = kwargs.pop('max_age_seconds')
@@ -45,7 +47,7 @@ class ExpiringDict(OrderedDict):
         assert max_age_seconds >= 0
         # assert max_len >= 1
         self.use_lock = False
-        OrderedDict.__init__(self, *args)
+        OrderedDict.__init__(self, *args, **kwargs)
         self.use_lock = True
 
         self.max_len = max_len
